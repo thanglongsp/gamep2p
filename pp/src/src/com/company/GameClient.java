@@ -16,7 +16,7 @@ public class GameClient extends JFrame implements KeyListener,Runnable,WindowLis
     private static final long serialVersionUID = 1L;
 
     // - Frame - //
-    private static final String TITLE  = "ping-pong::client";
+    private static final String TITLE  = "client";
     private static final int    WIDTH  = 800;	
     private static final int    HEIGHT = 460;		  
     boolean isRunning = false;
@@ -72,9 +72,9 @@ public class GameClient extends JFrame implements KeyListener,Runnable,WindowLis
         // Server Socket //
         try {
 
-            System.out.println("Finding server..."+ipAdd+":"+portAdd);
+            System.out.println("Đang tìm máy chủ..."+ipAdd+":"+portAdd);
             clientSoc = new Socket(ipAdd, portAdd);
-            System.out.println("Connected to server...");
+            System.out.println("Đã kết nối với máy chủ...");
 
             if(clientSoc.isConnected()){
                 System.out.println("Connected!");

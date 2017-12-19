@@ -2,6 +2,7 @@ package src.com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -16,13 +17,13 @@ public class Main extends JFrame implements KeyListener, Runnable {
 
     private static Image image;
     private Graphics g;
-    private static final String TITLE = "ping-pong::network_game";
+    private static final String TITLE = "network_game";
     private static final int WIDTH = 800;
     private static final int HEIGHT = 460;
     private String servername = "servername", clientname = "clientname";
 
     public Main() {
-
+        
     }
 
     @Override
@@ -36,7 +37,7 @@ public class Main extends JFrame implements KeyListener, Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        image = ImageIO.read(new File("C:\\Users\\thanglongsp\\Documents\\NetBeansProjects\\pp\\src\\src\\background_pong.png"));
+        image = ImageIO.read(new File("C:\\Users\\thanglongsp\\Documents\\NetBeansProjects\\gamep2p\\pp\\src\\src\\background_pong.png"));
         Main newT = new Main();
         newT.run();
     }
@@ -65,18 +66,18 @@ public class Main extends JFrame implements KeyListener, Runnable {
 
         if (keyCode == KeyEvent.VK_S) {
 
-            portAdd = JOptionPane.showInputDialog(null, "ex. 1024", "Enter server port:", 1);
+            portAdd = JOptionPane.showInputDialog(null, "Vd : 1234", "Enter server port:", 1);
 
             if (portAdd != null) {
                 if (!isPort(portAdd)) {
-                    JOptionPane.showMessageDialog(null, "Enter port number as a right format!", "Error!", 1);
+                    JOptionPane.showMessageDialog(null, "Nhập đúng định dạng cổng!", "Error!", 1);
                 } else {
 
-                    servername = JOptionPane.showInputDialog(null, "Nick name:", "Enter server name:", 1);
+                    servername = JOptionPane.showInputDialog(null, "Server :", "Nhập tên:", 1);
                     servername += "";
 
                     if (servername.length() > 10 || servername.length() < 3 || servername.startsWith("null")) {
-                        JOptionPane.showMessageDialog(null, "Enter name as a right format!", "Error!", 1);
+                        JOptionPane.showMessageDialog(null, "Nhập đúng định dạng tên!", "Error!", 1);
 
                     } else {
 
@@ -90,25 +91,25 @@ public class Main extends JFrame implements KeyListener, Runnable {
         }
 
         if (keyCode == KeyEvent.VK_C) {
-
-            ipAdd = JOptionPane.showInputDialog(null, "ex. 127.0.0.1", "Enter server ip:", 1);
+ 
+            ipAdd = JOptionPane.showInputDialog(null, "VD. 192.168.0.32", "Nhập ip của server:", 1);
 
             if (ipAdd != null) {
 
                 if (!isIPAddress(ipAdd)) {
-                    JOptionPane.showMessageDialog(null, "Enter ip number as a right format!", "Enter server ip:", 1);
+                    JOptionPane.showMessageDialog(null, "Nhập đúng định dạng!", "Nhập ip:", 1);
                 } else {
 
-                    portAdd = JOptionPane.showInputDialog(null, "ex. 1024", "Enter server port number:", 1);
+                    portAdd = JOptionPane.showInputDialog(null, "vd. 1234", "Nhập cổng server:", 1);
 
                     if (portAdd != null) {
                         if (!isPort(portAdd)) {
-                            JOptionPane.showMessageDialog(null, "Enter port number as a right format!", "Error!:", 1);
+                            JOptionPane.showMessageDialog(null, "Nhập đúng định dạng!", "Error!:", 1);
                         } else {
-                            clientname = JOptionPane.showInputDialog(null, "Nick name:", "Enter server name:", 1);
+                            clientname = JOptionPane.showInputDialog(null, "Client:", "Nhập tên:", 1);
                             clientname += "";
                             if (clientname.length() > 10 || clientname.length() < 3 || clientname.startsWith("null")) {
-                                JOptionPane.showMessageDialog(null, "Enter name as a right format!", "Error!", 1);
+                                JOptionPane.showMessageDialog(null, "Nhập đúng định dạng!", "Error!", 1);
                             } // - Start a Client - //
                             else {
                                 GameClient myClient = new GameClient(clientname, portAdd, ipAdd);
@@ -121,6 +122,12 @@ public class Main extends JFrame implements KeyListener, Runnable {
                 }
             }
         }//<--end_of_the_key_cond.-->//
+        
+        if(keyCode == KeyEvent.VK_N){
+                System.exit(0);
+        }
+       
+
     }//<--end_of_the_switch-->//
 
     @Override
