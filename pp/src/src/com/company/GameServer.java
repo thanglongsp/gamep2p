@@ -19,9 +19,8 @@ import javax.imageio.ImageIO;
 
 public class GameServer extends JFrame implements KeyListener,Runnable,WindowListener {
     private static final long serialVersionUID = 1L;
-    private static Image image;
     
-    private static final String TITLE  = "ping-pong::server";
+    private static final String TITLE  = "server";
     private static final int    WIDTH  = 800;		  
     private static final int    HEIGHT = 460;		 
 
@@ -37,7 +36,7 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
     private int barRS      = 30;	
     private int playerHS   = 120; 	
     private int max_Score = 9; 		
-    private int mPLAYERS   = 10; 		
+    private int mPLAYERS   = 20; 		
     private boolean Restart   = false;  // - Check Restart - //
     private boolean restartON = false;
 
@@ -77,9 +76,8 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
         // Server Socket //
         try {
             serverSoc = new ServerSocket(portAdd);
-            System.out.println("Server has started to running on the "+portAdd+" port.\nWaiting for a player...");
-            System.out.println("Waiting for connection...");
-            playerS.setImessage("Waiting player...");
+            System.out.println("Đang đợi người chơi kết nối...");
+            playerS.setImessage("Waiting ...");
             clientSoc = serverSoc.accept();
 
             System.out.println("Connected a player...");
@@ -93,13 +91,13 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
                     if(playerS.getScoreP() >= max_Score || playerS.getScoreS()>= max_Score && Restart==false){
 
                         if(playerS.getScoreS()>playerS.getScoreP()){
-                            playerS.setOmessage("Won               Loss-Play Again: Press any key || Exit: Esc|N");
+                            playerS.setOmessage("Won               Loss-Play Again: Nhấn N để thoát");
                             playerS.setImessage("Won               Loss-Play again? ");
                             Restart = true;
                         }
                         else{
-                            playerS.setImessage("Loss              Won-Play Again: Press any key || Exit: Esc|N");
-                            playerS.setOmessage("Loss              Won-Play Again: Press any key || Exit: Esc|N");
+                            playerS.setImessage("Loss              Won-Play Again: Nhấn N để thoát");
+                            playerS.setOmessage("Loss              Won-Play Again: Nhấn N để thoát");
                             Restart = true;
                         }
                         movB.suspend();	// - Stop the ball object - //
@@ -156,7 +154,6 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
     }
 
     private Image createImage() throws IOException{
-        image = ImageIO.read(new File("C:\\Users\\thanglongsp\\Documents\\NetBeansProjects\\pp\\src\\src\\background_pong2.png"));
         BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g = bufferedImage.createGraphics();
             
@@ -234,7 +231,6 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
     // - Move bar to Up - //
     public void playerUP(){
         if(playerS.getY() - mPLAYERS > playerHS/2-10){
-
             playerS.setY(playerS.getY()-mPLAYERS);
         }
     }
@@ -242,14 +238,11 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
     // - Move bar to Down - //
     public void playerDOWN(){
         if(playerS.getY() + mPLAYERS < HEIGHT - playerHS - 30){
-
             playerS.setY(playerS.getY()+mPLAYERS);
         }
     }
     
     public void checkCol(){
-
-
         // - Checking ball side, when a player got a score check -> false * if ball behind of the players check -> true
         if(playerS.getBallx() < playerC.getX() && playerS.getBallx() > playerS.getX()){
             check = true;
@@ -259,8 +252,8 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
         if(playerS.getBallx()>playerC.getX() && check){
 
             playerS.setScoreS(playerS.getScoreS()+1);
-            movingBALL.setX(380);
-            movingBALL.setY(230);
+            movingBALL.setX(playerS.getX());
+            movingBALL.setY(playerS.getY());
             //movingBALL.setXv(movingBALL.getXv()*-1);
             check = false;
         }
@@ -269,8 +262,8 @@ public class GameServer extends JFrame implements KeyListener,Runnable,WindowLis
         else if (playerS.getBallx()<=playerS.getX() && check){
 
             playerS.setScoreP(playerS.getScoreP()+1);
-            movingBALL.setX(380);
-            movingBALL.setY(230);
+            movingBALL.setX(playerC.getX());
+            movingBALL.setY(playerC.getY());
             //movingBALL.setXv(movingBALL.getXv()*-1);
             check = false;
 
